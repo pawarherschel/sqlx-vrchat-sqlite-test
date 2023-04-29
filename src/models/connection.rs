@@ -1,5 +1,6 @@
-use sqlx::SqlitePool;
 use std::error::Error;
+
+use sqlx::SqlitePool;
 
 pub async fn establish_connection(url: Option<String>) -> Result<SqlitePool, Box<dyn Error>> {
     let url = url.unwrap_or_else(|| {

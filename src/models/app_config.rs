@@ -1,9 +1,10 @@
-use config::Config;
-use sqlx::migrate::MigrateDatabase;
-use sqlx::Sqlite;
 use std::collections::HashMap;
 use std::error::Error;
 use std::path::PathBuf;
+
+use config::Config;
+use sqlx::migrate::MigrateDatabase;
+use sqlx::Sqlite;
 
 #[derive(Debug, serde::Serialize, serde::Deserialize, Clone, PartialEq, Eq, Hash)]
 pub struct AppConfig {

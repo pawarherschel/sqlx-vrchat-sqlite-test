@@ -1,6 +1,6 @@
-use crate::models::traits::Table;
-use crate::models::trust_level::TrustLevel;
 use sqlx::SqlitePool;
+
+use crate::zaphkiel::trust_level::TrustLevel;
 
 #[derive(
     Clone, PartialEq, Eq, Hash, sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize,
@@ -10,8 +10,6 @@ pub struct UsrFriendLogCurrent {
     pub display_name: String,
     pub trust_level: TrustLevel,
 }
-
-impl Table for UsrFriendLogCurrent {}
 
 impl UsrFriendLogCurrent {
     pub async fn get_all(

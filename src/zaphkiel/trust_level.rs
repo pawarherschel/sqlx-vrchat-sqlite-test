@@ -36,7 +36,7 @@ impl From<String> for TrustLevel {
             "trusted_user" => TrustLevel::TrustedUser,
             "vrchat_team" => TrustLevel::VRChatTeam,
 
-            _ => TrustLevel::Unknown,
+            _ => panic!("Unknown trust level: {}", value),
         }
     }
 }

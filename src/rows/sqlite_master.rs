@@ -1,4 +1,3 @@
-use crate::models::traits::Table;
 use sqlx::SqlitePool;
 
 #[derive(
@@ -11,8 +10,6 @@ pub struct SqliteMaster {
     pub rootpage: i32,
     pub sql: String,
 }
-
-impl Table for SqliteMaster {}
 
 impl SqliteMaster {
     pub async fn get_all(

@@ -1,8 +1,8 @@
 // use crate::models::traits::Table;
-// use crate::tables::gamelog_location::GamelogLocation;
-// use crate::tables::sqlite_master::SqliteMaster;
-// use crate::tables::usr_friend_log_current::UsrFriendLogCurrent;
-// use crate::tables::Tables;
+// use crate::rows::gamelog_location::GamelogLocation;
+// use crate::rows::sqlite_master::SqliteMaster;
+// use crate::rows::usr_friend_log_current::UsrFriendLogCurrent;
+// use crate::rows::Tables;
 // use sqlx::SqlitePool;
 // use std::error::Error;
 //
