@@ -1,5 +1,6 @@
 use config::Config;
 use serde::{Deserialize, Serialize};
+use sqlx::FromRow;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
@@ -59,7 +60,7 @@ impl From<HashMap<String, String>> for AppConfig {
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, FromRow, Debug)]
 pub struct GamelogLocation {
     pub id: i64,
     pub created_at: String,
@@ -70,7 +71,7 @@ pub struct GamelogLocation {
     pub group_name: Option<String>,
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug, Clone, FromRow)]
 pub struct MasterTable {
     pub type_: String,
     pub name: String,
