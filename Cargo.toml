@@ -10,7 +10,5 @@ config = "0.13.3"
 directories = "5.0.0"
 serde = { version = "1.0.160", features = ["derive"] }
 tokio = { version = "1", features = ["full"] }
-sqlx = { version = "0.6.3", features = ["sqlite", "runtime-tokio-rustls"] }
-
-
-
+sqlx = { version = "0.6.3", features = ["sqlite", "runtime-tokio-rustls", "chrono", "time"] }
+chrono = { version = "0.4.24", features = ["serde"] }

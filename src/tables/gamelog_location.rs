@@ -1,5 +1,6 @@
 use crate::models::traits::Table;
 use crate::tables::Tables;
+use chrono::{DateTime, Utc};
 use sqlx::SqlitePool;
 use std::error::Error;
 
@@ -8,7 +9,7 @@ use std::error::Error;
 )]
 pub struct GamelogLocation {
     pub id: i64,
-    pub created_at: String,
+    pub created_at: DateTime<Utc>,
     pub location: String,
     pub world_id: String,
     pub world_name: String,
