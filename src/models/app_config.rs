@@ -13,6 +13,7 @@ pub struct AppConfig {
     pub usr_id: String,
     pub verbose: bool,
 }
+
 impl AppConfig {
     fn default() -> AppConfig {
         AppConfig {

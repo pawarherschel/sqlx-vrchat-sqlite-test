@@ -1,7 +1,7 @@
+use chrono::{DateTime, Utc};
+
 use crate::rows::gamelog_location::GamelogLocationRow;
 use crate::zaphkiel::world_regions::Regions;
-use chrono::{DateTime, Utc};
-use nom::combinator::value;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default)]
 pub struct GamelogLocation {
