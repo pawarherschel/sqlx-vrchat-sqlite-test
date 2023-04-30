@@ -1,7 +1,5 @@
 use itertools::Itertools;
 use std::error::Error;
-use std::thread::sleep;
-use std::time::Duration;
 
 use sqlx_vrchat_sqlite_test::models::app_config::AppConfig;
 use sqlx_vrchat_sqlite_test::models::connection::establish_connection;
