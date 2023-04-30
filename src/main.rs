@@ -117,9 +117,11 @@ async fn main() -> Result<(), Box<dyn Error>> {
         println!("Searching for all locations where user joined: ");
         all_join_leave
             .iter()
-            .filter(|x| x.display_name == user.display_name)
-            .filter(|x| x.event == JoinLeaveEvent::Join)
-            .filter(|x| x.location.is_some())
+            .filter(|x| {
+                x.display_name == user.display_name
+                    && x.event == JoinLeaveEvent::Join
+                    && x.location.is_some()
+            })
             .map(|x| {
                 x.location
                     .as_ref()
