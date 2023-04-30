@@ -5,7 +5,6 @@ use sqlx_vrchat_sqlite_test::models::connection::establish_connection;
 use sqlx_vrchat_sqlite_test::models::gamelog_join_leave::GamelogJoinLeave;
 use sqlx_vrchat_sqlite_test::models::gamelog_location::GamelogLocation;
 use sqlx_vrchat_sqlite_test::models::usr_friend_log_current::UsrFriendLogCurrent;
-use sqlx_vrchat_sqlite_test::zaphkiel::trust_level::TrustLevel;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {

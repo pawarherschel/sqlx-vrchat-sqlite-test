@@ -1,7 +1,8 @@
+use chrono::{DateTime, Utc};
+
 use crate::rows::gamelog_join_leave::GamelogJoinLeaveRow;
 use crate::zaphkiel::join_leave_event::JoinLeaveEvent;
 use crate::zaphkiel::world_instance::WorldInstance;
-use chrono::{DateTime, Utc};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default)]
 pub struct GamelogJoinLeave {

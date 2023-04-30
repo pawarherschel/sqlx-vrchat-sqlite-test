@@ -1,6 +1,7 @@
+use sqlx::SqlitePool;
+
 use crate::rows::usr_friend_log_current::UsrFriendLogCurrentRow;
 use crate::zaphkiel::trust_level::TrustLevel;
-use sqlx::SqlitePool;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default)]
 pub struct UsrFriendLogCurrent {

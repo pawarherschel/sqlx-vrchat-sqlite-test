@@ -1,5 +1,6 @@
-use crate::zaphkiel::world_regions::Regions;
 use std::str::FromStr;
+
+use crate::zaphkiel::world_regions::Regions;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default)]
 pub struct WorldInstance {

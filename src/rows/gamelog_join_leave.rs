@@ -1,6 +1,7 @@
+use std::error::Error;
+
 use chrono::{DateTime, Utc};
 use sqlx::SqlitePool;
-use std::error::Error;
 
 #[derive(
     Clone, PartialEq, Eq, Hash, sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize,
