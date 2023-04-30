@@ -1,10 +1,14 @@
+use itertools::Itertools;
 use std::error::Error;
+use std::thread::sleep;
+use std::time::Duration;
 
 use sqlx_vrchat_sqlite_test::models::app_config::AppConfig;
 use sqlx_vrchat_sqlite_test::models::connection::establish_connection;
 use sqlx_vrchat_sqlite_test::models::gamelog_join_leave::GamelogJoinLeave;
 use sqlx_vrchat_sqlite_test::models::gamelog_location::GamelogLocation;
 use sqlx_vrchat_sqlite_test::models::usr_friend_log_current::UsrFriendLogCurrent;
+use sqlx_vrchat_sqlite_test::zaphkiel::join_leave_event::JoinLeaveEvent;
 use sqlx_vrchat_sqlite_test::zaphkiel::trust_level::TrustLevel;
 
 #[tokio::main]
@@ -89,6 +93,47 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .filter(|x| x.user_id.is_none())
             .count()
     );
+
+    loop {
+        let mut input = String::new();
+        println!("Enter a user to search for: ");
+        std::io::stdin().read_line(&mut input)?;
+        let input = input.as_str().trim();
+        if input == "exit" {
+            break;
+        }
+        let input = input.trim().to_string();
+        println!("Searching for user: {}", input);
+        let user = all_friends
+            .iter()
+            .filter(|&x| x.display_name == input)
+            .collect::<Vec<_>>();
+        let user = user.clone().into_iter().next();
+        if user.is_none() {
+            println!("User not found");
+            continue;
+        } else {
+            println!("User found: {:#?}", user.unwrap());
+        }
+        let user = user.unwrap();
+        println!("Searching for all locations where user joined: ");
+        all_join_leave
+            .iter()
+            .filter(|x| x.display_name == user.display_name)
+            .filter(|x| x.event == JoinLeaveEvent::Join)
+            .filter(|x| x.location.is_some())
+            .map(|x| x.location.as_ref().unwrap().world_id.clone())
+            .map(|x| {
+                all_gamelog_locations
+                    .iter()
+                    .find(|y| y.world_instance.world_id == x)
+                    .unwrap()
+                    .world_name
+                    .clone()
+            })
+            .unique()
+            .for_each(|x| println!("{}", x));
+    }
 
     Ok(())
 }
