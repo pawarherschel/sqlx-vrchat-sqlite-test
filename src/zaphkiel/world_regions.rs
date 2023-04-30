@@ -1,13 +1,25 @@
 use std::str::FromStr;
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, sqlx::Type)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
+    sqlx::Type,
+    Default,
+)]
 pub enum Regions {
+    #[default]
+    Other,
     USWest,
     US,
     USEast,
     Europe,
     Japan,
-    Other,
 }
 
 impl From<&str> for Regions {

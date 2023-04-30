@@ -12,8 +12,8 @@ pub struct GamelogLocationRow {
     pub location: String,
     pub world_id: String,
     pub world_name: String,
-    pub time: Option<i64>,
-    pub group_name: Option<String>,
+    pub time: i64,
+    pub group_name: String,
 }
 
 impl GamelogLocationRow {

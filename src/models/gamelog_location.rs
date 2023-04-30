@@ -1,22 +1,15 @@
 use chrono::{DateTime, Utc};
 
 use crate::rows::gamelog_location::GamelogLocationRow;
-use crate::zaphkiel::world_regions::Regions;
+use crate::zaphkiel::world_instance::WorldInstance;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, Default)]
 pub struct GamelogLocation {
     pub id: i64,
     pub created_at: DateTime<Utc>,
     pub world_name: String,
-    pub world_id: String,
-    pub instance_id: String,
-    pub nonce: Option<String>,
-    pub hidden: Option<String>,
-    pub private: Option<String>,
-    pub region: Option<Regions>,
-    pub friends: Option<String>,
-    pub group: Option<String>,
-    pub time: Option<i64>,
+    pub world_instance: WorldInstance,
+    pub time: Option<u64>,
     pub group_name: Option<String>,
 }
 
@@ -43,42 +36,18 @@ impl From<GamelogLocationRow> for GamelogLocation {
     fn from(row: GamelogLocationRow) -> Self {
         let world_id = row.location;
         let mut ret = Self::new();
-
-        let parts = world_id.split(':').collect::<Vec<_>>();
-        ret.world_id = parts[0].to_string();
-
-        let parts = parts[1].split('~').collect::<Vec<_>>();
-        ret.instance_id = parts[0].to_string();
-
-        for part in parts {
-            let parts = part.split('(').collect::<Vec<_>>();
-            let key = parts[0];
-            if parts.len() < 2 {
-                continue;
-            }
-            let value = parts[1].split(')').collect::<Vec<_>>()[0].to_string();
-
-            match key {
-                "nonce" => ret.nonce = Some(value),
-                "hidden" => ret.hidden = Some(value),
-                "private" => ret.private = Some(value),
-                "region" => ret.region = Some(value.into()),
-                "friends" => ret.friends = Some(value),
-                "group" => ret.group = Some(value),
-                _ => panic!("Unknown key: {}", key),
-            }
-        }
+        ret.world_instance = WorldInstance::from(world_id);
 
         ret.id = row.id;
         ret.created_at = row.created_at;
         ret.world_name = row.world_name.trim().to_string();
         ret.time = match row.time {
-            Some(0) => None,
-            _ => row.time,
+            ..=0 => None,
+            _ => Some(row.time as u64),
         };
         ret.group_name = match row.group_name {
-            Some(x) if x.is_empty() => None,
-            _ => row.group_name,
+            x if x.is_empty() => None,
+            _ => Some(row.group_name),
         };
 
         ret
