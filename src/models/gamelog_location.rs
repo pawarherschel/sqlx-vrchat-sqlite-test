@@ -76,3 +76,15 @@ impl From<GamelogLocationRow> for GamelogLocation {
         ret
     }
 }
+
+impl GamelogLocation {
+    pub async fn get_all(
+        pool: &sqlx::SqlitePool,
+    ) -> Result<Vec<GamelogLocation>, Box<dyn std::error::Error>> {
+        Ok(GamelogLocationRow::get_all(pool)
+            .await?
+            .into_iter()
+            .map(|x| x.into())
+            .collect())
+    }
+}
