@@ -3,6 +3,7 @@ pub mod models {
     pub mod connection;
     pub mod database;
     pub mod gamelog_location;
+    pub mod usr_friend_log_current;
 }
 
 pub mod rows {

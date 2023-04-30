@@ -1,24 +1,24 @@
 use sqlx::SqlitePool;
 
-use crate::zaphkiel::trust_level::TrustLevel;
-
 #[derive(
     Clone, PartialEq, Eq, Hash, sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize,
 )]
-pub struct UsrFriendLogCurrent {
+pub struct UsrFriendLogCurrentRow {
     pub user_id: String,
     pub display_name: String,
-    pub trust_level: TrustLevel,
+    pub trust_level: String,
 }
 
-impl UsrFriendLogCurrent {
+impl UsrFriendLogCurrentRow {
     pub async fn get_all(
         pool: &SqlitePool,
-    ) -> Result<Vec<UsrFriendLogCurrent>, Box<dyn std::error::Error>> {
-        let result =
-            sqlx::query_as::<_, UsrFriendLogCurrent>("SELECT * FROM usr_friend_log_current")
-                .fetch_all(pool)
-                .await?;
+        user_id: &str,
+    ) -> Result<Vec<UsrFriendLogCurrentRow>, Box<dyn std::error::Error>> {
+        let q = format!("SELECT * FROM usr{}_friend_log_current", user_id);
+        let result = sqlx::query_as::<_, UsrFriendLogCurrentRow>(&q)
+            .bind(user_id)
+            .fetch_all(pool)
+            .await?;
         Ok(result)
     }
 }

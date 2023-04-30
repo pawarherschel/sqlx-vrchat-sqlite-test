@@ -27,15 +27,24 @@ impl GamelogLocation {
     }
 }
 
+impl GamelogLocation {
+    pub async fn get_all(
+        pool: &sqlx::SqlitePool,
+    ) -> Result<Vec<GamelogLocation>, Box<dyn std::error::Error>> {
+        Ok(GamelogLocationRow::get_all(pool)
+            .await?
+            .into_iter()
+            .map(|x| x.into())
+            .collect())
+    }
+}
+
 impl From<GamelogLocationRow> for GamelogLocation {
     fn from(row: GamelogLocationRow) -> Self {
-        // dbg!(&row);
         let world_id = row.location;
-        // dbg!(&world_id);
         let mut ret = Self::new();
 
         let parts = world_id.split(':').collect::<Vec<_>>();
-        // dbg!(&parts);
         ret.world_id = parts[0].to_string();
 
         let parts = parts[1].split('~').collect::<Vec<_>>();
@@ -43,7 +52,6 @@ impl From<GamelogLocationRow> for GamelogLocation {
 
         for part in parts {
             let parts = part.split('(').collect::<Vec<_>>();
-            // dbg!(&parts);
             let key = parts[0];
             if parts.len() < 2 {
                 continue;
@@ -74,17 +82,5 @@ impl From<GamelogLocationRow> for GamelogLocation {
         };
 
         ret
-    }
-}
-
-impl GamelogLocation {
-    pub async fn get_all(
-        pool: &sqlx::SqlitePool,
-    ) -> Result<Vec<GamelogLocation>, Box<dyn std::error::Error>> {
-        Ok(GamelogLocationRow::get_all(pool)
-            .await?
-            .into_iter()
-            .map(|x| x.into())
-            .collect())
     }
 }

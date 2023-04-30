@@ -3,6 +3,8 @@ use std::error::Error;
 use sqlx_vrchat_sqlite_test::models::app_config::AppConfig;
 use sqlx_vrchat_sqlite_test::models::connection::establish_connection;
 use sqlx_vrchat_sqlite_test::models::gamelog_location::GamelogLocation;
+use sqlx_vrchat_sqlite_test::models::usr_friend_log_current::UsrFriendLogCurrent;
+use sqlx_vrchat_sqlite_test::rows::usr_friend_log_current::UsrFriendLogCurrentRow;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -18,6 +20,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
             .filter(|x| x.group_name.is_some())
             .collect::<Vec<&GamelogLocation>>()
     );
+
+    let all_friends = UsrFriendLogCurrent::get_all(&db, &settings.usr_id).await?;
+
+    println!("all_friends:\t{:#?}", all_friends);
 
     Ok(())
 }

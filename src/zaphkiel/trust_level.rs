@@ -1,7 +1,17 @@
 #[derive(
-    Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, sqlx::Type,
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Hash,
+    serde::Serialize,
+    serde::Deserialize,
+    sqlx::Type,
+    Default,
 )]
 pub enum TrustLevel {
+    #[default]
     Unknown,
     Visitor,
     NewUser,
