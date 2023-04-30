@@ -104,30 +104,34 @@ async fn main() -> Result<(), Box<dyn Error>> {
         }
         let input = input.trim().to_string();
         println!("Searching for user: {}", input);
-        let user = all_friends
-            .iter()
-            .filter(|&x| x.display_name == input)
-            .collect::<Vec<_>>();
-        let user = user.clone().into_iter().next();
-        if user.is_none() {
-            println!("User not found");
-            continue;
-        } else {
-            println!("User found: {:#?}", user.unwrap());
-        }
-        let user = user.unwrap();
+        let user = match all_friends.iter().find(|&x| x.display_name == input) {
+            Some(x) => {
+                println!("User found: {}", x.display_name);
+                x.clone()
+            }
+            None => {
+                println!("User not found");
+                continue;
+            }
+        };
         println!("Searching for all locations where user joined: ");
         all_join_leave
             .iter()
             .filter(|x| x.display_name == user.display_name)
             .filter(|x| x.event == JoinLeaveEvent::Join)
             .filter(|x| x.location.is_some())
-            .map(|x| x.location.as_ref().unwrap().world_id.clone())
+            .map(|x| {
+                x.location
+                    .as_ref()
+                    .expect("how in the holy hell did this unwrap crash")
+                    .world_id
+                    .clone()
+            })
             .map(|x| {
                 all_gamelog_locations
                     .iter()
                     .find(|y| y.world_instance.world_id == x)
-                    .unwrap()
+                    .expect("no locations found where the user joined")
                     .world_name
                     .clone()
             })
