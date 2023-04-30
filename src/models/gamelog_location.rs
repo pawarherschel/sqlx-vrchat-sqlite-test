@@ -76,21 +76,3 @@ impl From<GamelogLocationRow> for GamelogLocation {
         ret
     }
 }
-
-// .into_iter()
-// .map(|x| {
-// let mut result = x.clone();
-// if let Some(time) = x.time {
-// if time == 0 {
-// result.time = None;
-// }
-// }
-// if let Some(group_name) = &x.group_name {
-// if group_name.is_empty() {
-// result.group_name = None;
-// }
-// }
-//
-// result
-// })
-// .collect()
