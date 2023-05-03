@@ -1,5 +1,6 @@
 use sqlx::SqlitePool;
 
+/// This is a row from the `sqlite_master` table.
 #[derive(
     Clone, PartialEq, Eq, Hash, sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize,
 )]
@@ -12,6 +13,7 @@ pub struct SqliteMaster {
 }
 
 impl SqliteMaster {
+    /// Get all rows from the `sqlite_master` table.
     pub async fn get_all(
         pool: &SqlitePool,
     ) -> Result<Vec<SqliteMaster>, Box<dyn std::error::Error>> {

@@ -1,5 +1,24 @@
 use std::str::FromStr;
 
+/// JoinLeaveEvent is an enum that represents the different types of join/leave events that can be
+/// found in the gamelog.
+///
+/// # Available Variants
+/// - Join
+/// - Leave
+/// - Other
+///
+/// # Examples
+///
+/// ```
+/// use sqlx_vrchat_sqlite_test::zaphkiel::join_leave_event::JoinLeaveEvent;
+///
+/// let join = JoinLeaveEvent::from("OnPlayerJoined");
+/// let leave = JoinLeaveEvent::from("OnPlayerLeft");
+///
+/// assert_eq!(join, JoinLeaveEvent::Join);
+/// assert_eq!(leave, JoinLeaveEvent::Leave);
+/// ```
 #[derive(
     Debug,
     Clone,

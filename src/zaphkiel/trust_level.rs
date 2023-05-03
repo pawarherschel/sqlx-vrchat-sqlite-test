@@ -1,3 +1,28 @@
+/// Trust level of a user.
+///
+/// # Trust Levels
+/// - Unknown
+/// - Visitor
+/// - New User
+/// - User
+/// - Known User
+/// - Trusted User
+/// - VRChat Team
+/// - Nuisance
+///
+/// # Examples
+/// ```
+/// use sqlx_vrchat_sqlite_test::zaphkiel::trust_level::TrustLevel;
+///
+/// let trust_level = TrustLevel::from("user");
+/// assert_eq!(trust_level, TrustLevel::User);
+///     
+/// let trust_level = TrustLevel::from("User");
+/// assert_eq!(trust_level, TrustLevel::User);
+///
+/// let trust_level = TrustLevel::from("USER");
+/// assert_eq!(trust_level, TrustLevel::User);
+/// ```
 #[derive(
     Debug,
     Clone,

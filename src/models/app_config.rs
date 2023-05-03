@@ -6,6 +6,12 @@ use config::Config;
 use sqlx::migrate::MigrateDatabase;
 use sqlx::Sqlite;
 
+/// This is the application configuration.
+///
+/// # Values
+///
+/// - `vrcx_sqlite` - The path to the VRCX sqlite3 file.
+/// - `usr_id` - The user id of the user to get data for.
 #[derive(Debug, serde::Serialize, serde::Deserialize, Clone, PartialEq, Eq, Hash)]
 pub struct AppConfig {
     pub vrcx_sqlite: PathBuf,
@@ -14,7 +20,20 @@ pub struct AppConfig {
     pub verbose: bool,
 }
 
-impl AppConfig {
+impl Default for AppConfig {
+    /// Create a new `AppConfig`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use sqlx_vrchat_sqlite_test::models::app_config::AppConfig;
+    ///
+    /// let app_config = AppConfig::default();
+    /// ```
+    ///
+    /// # Default Values
+    ///
+    /// - `vrcx_sqlite` - The path to the VRCX sqlite3 file, which is `%APPDATA%\VRCX\vrcx.sqlite`.
     fn default() -> AppConfig {
         AppConfig {
             vrcx_sqlite: directories::BaseDirs::new()
@@ -31,9 +50,18 @@ impl AppConfig {
 }
 
 impl AppConfig {
-    fn new() -> Self {
+    /// Create a new `AppConfig`.
+    pub fn new() -> Self {
         AppConfig::default()
     }
+
+    /// Build the `AppConfig`.
+    ///
+    /// # What it does
+    ///
+    /// - Checks if the sqlite3 file exists.
+    /// - Checks if the database exists.
+    /// - Returns the `AppConfig`.
     pub async fn build<'a>(self) -> Result<AppConfig, Box<dyn Error>> {
         if !self.vrcx_sqlite.exists() {
             panic!("The sqlite3 file does not exist at {:?}", self.vrcx_sqlite);
@@ -62,6 +90,7 @@ impl AppConfig {
         })
     }
 
+    /// Get the `AppConfig` from the `Settings.toml` file.
     pub fn get() -> Self {
         let settings = Config::builder()
             .add_source(config::File::with_name("src/Settings.toml"))
@@ -78,6 +107,7 @@ impl AppConfig {
 }
 
 impl From<HashMap<String, String>> for AppConfig {
+    /// Create a new `AppConfig` from a `HashMap<String, String>`.
     fn from(map: HashMap<String, String>) -> Self {
         let mut config = AppConfig::new();
 

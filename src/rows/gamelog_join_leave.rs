@@ -3,6 +3,7 @@ use std::error::Error;
 use chrono::{DateTime, Utc};
 use sqlx::SqlitePool;
 
+/// This is a row from the `gamelog_join_leave` table.
 #[derive(
     Clone, PartialEq, Eq, Hash, sqlx::FromRow, Debug, serde::Serialize, serde::Deserialize,
 )]
@@ -18,6 +19,7 @@ pub struct GamelogJoinLeaveRow {
 }
 
 impl GamelogJoinLeaveRow {
+    /// Get all rows from the `gamelog_join_leave` table.
     pub async fn get_all(pool: &SqlitePool) -> Result<Vec<GamelogJoinLeaveRow>, Box<dyn Error>> {
         Ok(
             sqlx::query_as::<_, GamelogJoinLeaveRow>("SELECT * FROM gamelog_join_leave")

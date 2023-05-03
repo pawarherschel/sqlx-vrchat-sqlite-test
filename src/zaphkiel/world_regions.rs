@@ -1,5 +1,22 @@
 use std::str::FromStr;
 
+/// Regions where VRChat worlds instances are hosted.
+///
+/// # Available Regions
+/// - USWest
+/// - US
+/// - USEast
+/// - Europe
+/// - Japan
+/// - Other
+///
+/// # Examples
+/// ```
+/// use sqlx_vrchat_sqlite_test::zaphkiel::world_regions::Regions;
+///
+/// let region = Regions::from("uswest");
+/// assert_eq!(region, Regions::USWest);
+/// ```
 #[derive(
     Debug,
     Clone,
